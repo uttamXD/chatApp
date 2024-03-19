@@ -1,7 +1,17 @@
+import 'package:chat_app/common/authentication/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../features/settings/settings_page.dart';
 
 class KDrawer extends StatelessWidget {
   const KDrawer({super.key});
+
+  void logout() {
+    //suthService
+    final auth = AuthService();
+    auth.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +36,10 @@ class KDrawer extends StatelessWidget {
                     leading: const Icon(
                       Icons.home,
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      //pop the drawer
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
                 Padding(
@@ -38,7 +51,17 @@ class KDrawer extends StatelessWidget {
                     leading: const Icon(
                       Icons.settings,
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      //pop the drawer
+                      Navigator.pop(context);
+                      //navigate to settings page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SettingsPage(),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -52,7 +75,7 @@ class KDrawer extends StatelessWidget {
                 leading: const Icon(
                   Icons.logout,
                 ),
-                onTap: () {},
+                onTap: logout,
               ),
             ),
           ],
