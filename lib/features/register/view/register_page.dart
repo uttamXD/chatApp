@@ -1,3 +1,4 @@
+import 'package:chat_app/common/authentication/auth_service.dart';
 import 'package:chat_app/common/constants/ui_helpers.dart';
 import 'package:chat_app/common/widgets/k_button.dart';
 import 'package:chat_app/common/widgets/k_textformfield.dart';
@@ -13,77 +14,112 @@ class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
 
   //register method
-  void register() {}
+  void register(BuildContext context) async {
+    //get auth service
+    final _auth = AuthService();
+
+    if (_pwController.text == _confirmPwController.text) {
+      try {
+        await _auth.signUpWithEmailPassword(
+            _eMailController.text, _pwController.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
+    }
+    //if password don' match show error
+    else {
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text(
+            "Password does not match",
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //logo
-            Icon(Icons.message,
-                size: 60, color: Theme.of(context).colorScheme.primary),
-            elHeightSpan,
-            //welcome back message
-            Text(
-              "Welcome back, you've been missed!",
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-            ),
-            lHeightSpan,
-            //email textfield
-            KTextFormField(
-                hintText: 'Email',
-                obscureText: false,
-                controller: _eMailController),
-            sHeightSpan,
-            //password textfield
-            KTextFormField(
-              hintText: 'Password',
-              obscureText: true,
-              controller: _pwController,
-            ),
-            sHeightSpan,
-            //confirm password textfield
-            KTextFormField(
-              hintText: 'Confirm password',
-              obscureText: true,
-              controller: _confirmPwController,
-            ),
-            elHeightSpan,
-            //login button
-            KButton(
-              text: 'Register',
-              onTap: register,
-            ),
-            elHeightSpan,
-            //register now
-            InkWell(
-              onTap: () {
-                Get.toNamed(
-                  "/login",
-                );
-              },
-              child: RichText(
-                text: TextSpan(
-                  text: "Already have an account? ",
+      body: ListView(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //logo
+                Icon(Icons.message,
+                    size: 60, color: Theme.of(context).colorScheme.primary),
+                elHeightSpan,
+                //welcome back message
+                Text(
+                  "Welcome back, you've been missed!",
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.primary),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "login",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                  ],
                 ),
-              ),
+                lHeightSpan,
+                //email textfield
+                KTextFormField(
+                    hintText: 'Email',
+                    obscureText: false,
+                    controller: _eMailController),
+                sHeightSpan,
+                //password textfield
+                KTextFormField(
+                  hintText: 'Password',
+                  obscureText: true,
+                  controller: _pwController,
+                ),
+                sHeightSpan,
+                //confirm password textfield
+                KTextFormField(
+                  hintText: 'Confirm password',
+                  obscureText: true,
+                  controller: _confirmPwController,
+                ),
+                elHeightSpan,
+                //login button
+                KButton(
+                  text: 'Register',
+                  onTap: () => register(context),
+                ),
+                elHeightSpan,
+                //register now
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(
+                      "/login",
+                    );
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Already have an account? ",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "login",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

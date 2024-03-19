@@ -13,12 +13,12 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   //login method
-  void login(BuildContext context) async {
+  void login(context) async {
     //auth service
     final authService = AuthService();
     //try login
     try {
-      await authService.signInWithEmailAndPassword(
+      await authService.signInWithEmailPassword(
           _eMailController.text, _pwController.text);
     }
     //catch error

@@ -1,4 +1,5 @@
 import 'package:chat_app/common/authentication/auth_service.dart';
+import 'package:chat_app/common/widgets/k_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,16 +14,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        actions: [
-          //logout
-          IconButton(
-            onPressed: logout,
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Home'),
+          actions: [
+            //logout
+            IconButton(
+              onPressed: logout,
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+        drawer: const KDrawer());
   }
 }
