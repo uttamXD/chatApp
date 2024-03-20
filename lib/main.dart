@@ -14,7 +14,7 @@ Future<void> main() async {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes,
-      initialRoute: "/authGate",
+      initialRoute: ("/authGate"),
       theme: lightMode,
     ),
   );

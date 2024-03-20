@@ -1,4 +1,4 @@
-import 'package:chat_app/common/authentication/auth_service.dart';
+import 'package:chat_app/common/services/authentication/auth_service.dart';
 import 'package:chat_app/common/constants/ui_helpers.dart';
 import 'package:chat_app/common/widgets/k_button.dart';
 import 'package:chat_app/common/widgets/k_textformfield.dart';
@@ -14,14 +14,17 @@ class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
 
   //register method
-  void register(BuildContext context) async {
+  void register(BuildContext context) {
     //get auth service
-    final _auth = AuthService();
+    final auth = AuthService();
 
     if (_pwController.text == _confirmPwController.text) {
       try {
-        await _auth.signUpWithEmailPassword(
-            _eMailController.text, _pwController.text);
+        auth.signUpWithEmailPassword(
+          _eMailController.text,
+          _pwController.text,
+        );
+        Get.toNamed('/home');
       } catch (e) {
         showDialog(
           context: context,

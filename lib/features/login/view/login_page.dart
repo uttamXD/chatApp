@@ -1,4 +1,4 @@
-import 'package:chat_app/common/authentication/auth_service.dart';
+import 'package:chat_app/common/services/authentication/auth_service.dart';
 import 'package:chat_app/common/constants/ui_helpers.dart';
 import 'package:chat_app/common/widgets/k_button.dart';
 import 'package:chat_app/common/widgets/k_textformfield.dart';
