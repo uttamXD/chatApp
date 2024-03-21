@@ -24,7 +24,7 @@ class RegisterPage extends StatelessWidget {
           _eMailController.text,
           _pwController.text,
         );
-        Get.toNamed('/home');
+        // Get.toNamed('/home');
       } catch (e) {
         showDialog(
           context: context,
