@@ -38,7 +38,7 @@ class ChatService {
         timestamp: timestamp);
 //create unique chat room for two chatting users
     List<String> ids = [currentUserId, receiverId];
-    ids.sort();
+    ids.sort(); //sort the ids(ensured the chatroomID is the same for any 2 users)
     String chatRoomId = ids.join('_');
 //add message to database
     await _firestore
@@ -52,7 +52,7 @@ class ChatService {
 
   //receive message
   Stream<QuerySnapshot> getMessage(String userId, otherUserId) {
-    //create chat room for two chatting users
+    //create chat room ID for two chatting users
     List<String> ids = [userId, otherUserId];
     ids.sort();
     String chatRoomId = ids.join('_');
