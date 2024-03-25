@@ -37,6 +37,9 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(receiverEmail),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey,
+        elevation: 0,
       ),
       body: Column(
         children: [
@@ -87,7 +90,7 @@ class ChatPage extends StatelessWidget {
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
       alignment: alignment,
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: ChatBubble(message: data['message'], isCurrentUser: isCurrentUser),
     );
   }
@@ -95,7 +98,7 @@ class ChatPage extends StatelessWidget {
   //build message input
   Widget _buildUserInput() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 50.0),
+      padding: const EdgeInsets.only(bottom: 25.0),
       child: Row(
         children: [
           //textfield
