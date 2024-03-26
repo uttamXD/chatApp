@@ -3,7 +3,6 @@ import 'package:chat_app/common/constants/ui_helpers.dart';
 import 'package:chat_app/common/widgets/k_button.dart';
 import 'package:chat_app/common/widgets/k_textformfield.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class RegisterPage extends StatelessWidget {
   //Email, password and confirm password controller
@@ -11,7 +10,10 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _pwController = TextEditingController();
   final TextEditingController _confirmPwController = TextEditingController();
 
-  RegisterPage({super.key});
+  //tap to go to login page
+  final void Function()? onTap;
+
+  RegisterPage({super.key, required this.onTap});
 
   //register method
   void register(BuildContext context) {
@@ -98,11 +100,7 @@ class RegisterPage extends StatelessWidget {
                 elHeightSpan,
                 //register now
                 InkWell(
-                  onTap: () {
-                    Get.toNamed(
-                      "/login",
-                    );
-                  },
+                  onTap: onTap,
                   child: RichText(
                     text: TextSpan(
                       text: "Already have an account? ",

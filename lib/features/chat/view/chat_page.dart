@@ -5,15 +5,20 @@ import 'package:chat_app/common/widgets/k_textformfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverId;
-  ChatPage({
+  const ChatPage({
     super.key,
     required this.receiverEmail,
     required this.receiverId,
   });
 
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
 //text controller
   final TextEditingController _messageController = TextEditingController();
 
@@ -21,22 +26,72 @@ class ChatPage extends StatelessWidget {
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
+//for textfield focus
+  FocusNode myFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    //add lsitener to focus node
+    myFocusNode.addListener(
+      () {
+        if (myFocusNode.hasFocus) {
+          //cause a delay so keyboard has time to show
+          //then the amount of remaining space will be calculated
+          //the scroll down
+          Future.delayed(
+            const Duration(milliseconds: 500),
+            () => scrollDown(),
+          );
+        }
+      },
+    );
+
+    //wait a bit for listview to build the scroll down
+    Future.delayed(
+      const Duration(
+        milliseconds: 500,
+      ),
+      () => scrollDown(),
+    );
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+//scroll controller
+  final ScrollController _scrollController = ScrollController();
+  void scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
   //send message
   void sendMessage() async {
 //if there is something inside textfield
     if (_messageController.text.isNotEmpty) {
       //send message
-      await _chatService.sendMessage(receiverId, _messageController.text);
+      await _chatService.sendMessage(
+          widget.receiverId, _messageController.text);
       //clear messageContreller
       _messageController.clear();
     }
+    scrollDown();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(receiverEmail),
+        title: Text(widget.receiverEmail),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.grey,
         elevation: 0,
@@ -59,7 +114,7 @@ class ChatPage extends StatelessWidget {
   Widget _buildMessageList() {
     String senderId = _authService.getCurrentUser()!.uid;
     return StreamBuilder(
-      stream: _chatService.getMessage(receiverId, senderId),
+      stream: _chatService.getMessage(widget.receiverId, senderId),
       builder: ((context, snapshot) {
         //error
         if (snapshot.hasError) {
@@ -71,6 +126,7 @@ class ChatPage extends StatelessWidget {
         }
         //return listview
         return ListView(
+          controller: _scrollController,
           children:
               snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
         );
@@ -90,7 +146,6 @@ class ChatPage extends StatelessWidget {
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
       alignment: alignment,
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: ChatBubble(message: data['message'], isCurrentUser: isCurrentUser),
     );
   }
@@ -104,9 +159,11 @@ class ChatPage extends StatelessWidget {
           //textfield
           Expanded(
             child: KTextFormField(
-                hintText: "Type a message",
-                obscureText: false,
-                controller: _messageController),
+              hintText: "Type a message",
+              obscureText: false,
+              controller: _messageController,
+              focusNode: myFocusNode,
+            ),
           ),
 
           //send button
