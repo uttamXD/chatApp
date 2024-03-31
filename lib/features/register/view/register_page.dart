@@ -55,72 +55,76 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: ListView(
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //logo
-                Icon(Icons.message,
-                    size: 60, color: Theme.of(context).colorScheme.primary),
-                elHeightSpan,
-                //welcome back message
-                Text(
-                  "Welcome back, you've been missed!",
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.primary),
-                ),
-                lHeightSpan,
-                //email textfield
-                KTextFormField(
-                    hintText: 'Email',
-                    obscureText: false,
-                    controller: _eMailController),
-                sHeightSpan,
-                //password textfield
-                KTextFormField(
-                  hintText: 'Password',
-                  obscureText: true,
-                  controller: _pwController,
-                ),
-                sHeightSpan,
-                //confirm password textfield
-                KTextFormField(
-                  hintText: 'Confirm password',
-                  obscureText: true,
-                  controller: _confirmPwController,
-                ),
-                elHeightSpan,
-                //login button
-                KButton(
-                  text: 'Register',
-                  onTap: () => register(context),
-                ),
-                elHeightSpan,
-                //register now
-                InkWell(
-                  onTap: onTap,
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Already have an account? ",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                      ],
-                    ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 90),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //logo
+              Image.asset(
+                'asset/logo/chat.png',
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+              // Icon(Icons.message,
+              //     size: 60, color: Theme.of(context).colorScheme.primary),
+              elHeightSpan,
+              //welcome back message
+              Text(
+                "Welcome back, you've been missed!",
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+              lHeightSpan,
+              //email textfield
+              KTextFormField(
+                  hintText: 'Email',
+                  obscureText: false,
+                  controller: _eMailController),
+              sHeightSpan,
+              //password textfield
+              KTextFormField(
+                hintText: 'Password',
+                obscureText: true,
+                controller: _pwController,
+              ),
+              sHeightSpan,
+              //confirm password textfield
+              KTextFormField(
+                hintText: 'Confirm password',
+                obscureText: true,
+                controller: _confirmPwController,
+              ),
+              elHeightSpan,
+              //login button
+              KButton(
+                text: 'Register',
+                onTap: () => register(context),
+              ),
+              elHeightSpan,
+              //register now
+              InkWell(
+                onTap: onTap,
+                child: RichText(
+                  text: TextSpan(
+                    text: "Already have an account? ",
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "login",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

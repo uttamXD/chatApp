@@ -7,6 +7,9 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //light and dark mode
+    bool isDarkMode =
+        Provider.of<ThemeProvider>(context, listen: false).isDarkMode;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -26,7 +29,13 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //dark mode
-            const Text("Dark Mode"),
+            Text(
+              "Dark Mode",
+              style: TextStyle(
+                color:
+                    (isDarkMode ? Colors.grey.shade200 : Colors.grey.shade800),
+              ),
+            ),
 
             //switch toggle
             Switch(

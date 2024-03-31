@@ -40,60 +40,68 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //logo
-            Image.asset('assets/logo/logo.jpg'),
-            // Icon(Icons.message,
-            //     size: 60, color: Theme.of(context).colorScheme.primary),
-            elHeightSpan,
-            //welcome back message
-            Text(
-              "Welcome back, you've been missed!",
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-            ),
-            lHeightSpan,
-            //email textfield
-            KTextFormField(
-                hintText: 'Email',
-                obscureText: false,
-                controller: _eMailController),
-            sHeightSpan,
-            //password testfield
-            KTextFormField(
-              hintText: 'Password',
-              obscureText: true,
-              controller: _pwController,
-            ),
-            elHeightSpan,
-            //login button
-            KButton(
-              text: 'Login',
-              onTap: () => login(context),
-            ),
-            elHeightSpan,
-            //register now
-            InkWell(
-              onTap: onTap,
-              child: RichText(
-                text: TextSpan(
-                  text: "Don't have an account? ",
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.primary),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "Register now",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                  ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 90),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //logo
+              Image.asset(
+                'asset/logo/chat.png',
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+              // Icon(Icons.message,
+              //     size: 60, color: Theme.of(context).colorScheme.primary),
+              elHeightSpan,
+              //welcome back message
+              Text(
+                "Welcome back, you've been missed!",
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+              lHeightSpan,
+              //email textfield
+              KTextFormField(
+                  hintText: 'Email',
+                  obscureText: false,
+                  controller: _eMailController),
+              sHeightSpan,
+              //password testfield
+              KTextFormField(
+                hintText: 'Password',
+                obscureText: true,
+                controller: _pwController,
+              ),
+              elHeightSpan,
+              //login button
+              KButton(
+                text: 'Login',
+                onTap: () => login(context),
+              ),
+              elHeightSpan,
+              //register now
+              InkWell(
+                onTap: onTap,
+                child: RichText(
+                  text: TextSpan(
+                    text: "Don't have an account? ",
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "Register now",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

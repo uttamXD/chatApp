@@ -39,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
         if (myFocusNode.hasFocus) {
           //cause a delay so keyboard has time to show
           //then the amount of remaining space will be calculated
-          //the scroll down
+          //then scroll down
           Future.delayed(
             const Duration(milliseconds: 500),
             () => scrollDown(),
